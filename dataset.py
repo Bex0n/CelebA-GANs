@@ -34,7 +34,7 @@ class CelebADataset(L.LightningDataModule):
 
     def train_dataloader(self) -> DataLoader:
         celeba_train = DataLoader(self.celeba_train,
-                                  batch_size=self.batch_szie,
+                                  batch_size=self.batch_size,
                                   pin_memory=self.pin_memory,
                                   num_workers=self.num_workers,
                                   shuffle=True)

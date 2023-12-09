@@ -1,6 +1,7 @@
 import argparse
 import yaml
 
+import torch
 from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import TensorBoardLogger
 
@@ -10,6 +11,8 @@ from models.wgan import (
     Generator,
     WGAN
 )
+
+torch.set_float32_matmul_precision('high')
 
 parser = argparse.ArgumentParser(description='Trainer for GANs')
 parser.add_argument('--config', '-c',
@@ -53,4 +56,4 @@ trainer = Trainer(logger=tb_logger,
                   accelerator=config['hardware_params']['accelerator'],
                   devices=config['hardware_params']['devices'],
                   max_epochs=config['training_params']['max_epochs'])
-# trainer.fit(model=, datamodule=data)
+trainer.fit(model=wgan, datamodule=data)

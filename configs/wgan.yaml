@@ -5,7 +5,7 @@ data_params:
   pin_memory: True
 
 model_params:
-  in_channels: 3
+  channels: 3
   latent_dim: 200
   critic_steps: 3
 

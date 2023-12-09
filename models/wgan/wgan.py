@@ -1,3 +1,5 @@
+from typing import Any
+from pytorch_lightning.utilities.types import STEP_OUTPUT
 import torch
 from pytorch_lightning import LightningModule
 
@@ -49,6 +51,11 @@ class WGAN(LightningModule):
             self.manual_backward(g_loss)
             g_opt.step()
             self.log('g_loss', g_loss, on_step=True, on_epoch=True)
+    
+    def on_train_epoch_end(self):
+        with torch.no_grad():
+            fake_batch = self.sample_G(16)
+            self.logger.experiment.add_images('generated_images', fake_batch, self.current_epoch)
 
     def configure_optimizers(self):
         g_opt = torch.optim.Adam(self.G.parameters(), lr=1e-5)

@@ -5,8 +5,9 @@ data_params:
   pin_memory: True
 
 model_params:
-  in_channels: 3
-  z_dim: 512
+  channels: 3
+  latent_dim: 200
+  critic_steps: 3
 
 training_params:
   lr: 0.0002

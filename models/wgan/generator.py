@@ -8,11 +8,11 @@ class Generator(nn.Module):
         self.latent_dim = kwargs['latent_dim']
         self.channels = kwargs['channels']
 
-        self.hidden_dims = [self.channels, 512, 256, 128, 64, 32]
+        self.hidden_dims = [256, 128, 64, 32]
         modules = []
 
         self.fc = nn.Sequential(
-            nn.Linear(self.latent_dim, self.channels * 2 * 2),
+            nn.Linear(self.latent_dim, self.hidden_dims[0] * 4 * 4),
             nn.ReLU()
         )
 
@@ -21,10 +21,9 @@ class Generator(nn.Module):
                 nn.Sequential(
                     nn.ConvTranspose2d(self.hidden_dims[i],
                                        self.hidden_dims[i + 1],
-                                       kernel_size=3,
+                                       kernel_size=4,
                                        stride=2,
-                                       padding=1,
-                                       output_padding=1),
+                                       padding=1),
                     nn.BatchNorm2d(self.hidden_dims[i + 1]),
                     nn.LeakyReLU()
                 )
@@ -32,15 +31,15 @@ class Generator(nn.Module):
         modules.append(nn.Sequential(
             nn.ConvTranspose2d(self.hidden_dims[-1],
                                self.channels,
-                               kernel_size=1,
-                               stride=1),
-            nn.BatchNorm2d(self.channels),
+                               kernel_size=4,
+                               stride=2,
+                               padding=1),
             nn.Sigmoid()
         ))
         self.conv = nn.Sequential(*modules)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.fc(x)
-        x = x.view(-1, self.channels, 2, 2)
+        x = x.view(-1, self.hidden_dims[0], 4, 4)
         x = self.conv(x)
         return x

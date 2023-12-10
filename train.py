@@ -19,7 +19,7 @@ parser.add_argument('--config', '-c',
                     dest="filename",
                     metavar='FILE',
                     help='path to the config file',
-                    default='configs/vanilla_gan.yaml')
+                    default='configs/wgan.yaml')
 parser.add_argument('--checkpoint', '-p',
                     dest="checkpoint",
                     metavar='FILE',

@@ -58,6 +58,6 @@ class WGAN(LightningModule):
             self.logger.experiment.add_images('generated_images', fake_batch, self.current_epoch)
 
     def configure_optimizers(self):
-        g_opt = torch.optim.Adam(self.G.parameters(), lr=1e-5)
-        d_opt = torch.optim.Adam(self.D.parameters(), lr=1e-5)
+        g_opt = torch.optim.Adam(self.G.parameters(), lr=1e-5, betas=(0.5, 0.9))
+        d_opt = torch.optim.Adam(self.D.parameters(), lr=1e-5, betas=(0.5, 0.9))
         return g_opt, d_opt

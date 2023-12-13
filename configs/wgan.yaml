@@ -7,11 +7,13 @@ data_params:
 model_params:
   channels: 3
   latent_dim: 128
-  critic_steps: 4
+  critic_steps: 8
+  gp_lambda: 10
+  d_lr: 0.0001
+  g_lr: 0.00005
 
 training_params:
-  lr: 0.0001
-  max_epochs: 100
+  max_epochs: 400
 
 hardware_params:
   accelerator: 'auto'

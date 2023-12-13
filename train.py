@@ -37,6 +37,9 @@ model_params = config['model_params']
 trainig_params = config['training_params']
 
 wgan = WGAN(**model_params)
+if args.checkpoint:
+    print('Loading model from checkpoint.')
+    wgan = WGAN.load_from_checkpoint(args.checkpoint, **model_params)
 
 """
 A work-around to address issues with pytorch's celebA dataset class.

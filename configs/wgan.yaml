@@ -7,9 +7,9 @@ data_params:
 model_params:
   channels: 3
   latent_dim: 128
-  critic_steps: 8
+  critic_steps: 12
   gp_lambda: 10
-  d_lr: 0.0001
+  d_lr: 0.00005
   g_lr: 0.00005
 
 training_params:

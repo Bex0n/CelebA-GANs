@@ -52,6 +52,8 @@ class WGAN(LightningModule):
         return torch.mean((grad_norm - 1) ** 2)
 
     def training_step(self, batch: torch.Tensor, batch_idx: int):
+        self.G.train()
+        self.D.train()
         g_opt, d_opt = self.optimizers()
         self.D.zero_grad(d_opt)
         x, _ = batch
@@ -81,6 +83,7 @@ class WGAN(LightningModule):
             self.log('g_loss', g_loss, on_epoch=True)
 
     def on_train_epoch_end(self):
+        self.G.eval()
         with torch.no_grad():
             fake_batch = self.sample_G(32)
             self.logger.experiment.add_images('generated_images', fake_batch, self.current_epoch)
